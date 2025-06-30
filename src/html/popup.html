@@ -1,0 +1,53 @@
+<!-- futur fichier pour afficher la fenetre avec les infos-->
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Minuteur simple</title>
+    <link rel="stylesheet" href="../styles/css/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kotta+One&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="../../dist/popup/popup.js" type="module"></script>
+  </head>
+
+  <body>
+    <div id="icon">
+      <img src="../styles/assets/chrono01.png" alt="Chrono 01" id="chrono01" />
+    </div>
+      <div id="tempsTermine">
+        <div id="upperTempsTermine">
+          <h2>PROGRESSION HEBDOMADAIRE</h2>
+          <div id="progressZone">
+            <div id="upperProgressZone">
+              <div id="progressBar">
+                <div id="innerProgressBar"></div>
+              </div>
+            </div>
+            <div id="lowerProgressZone">
+              <div id="pourcentage">65</div>
+              <div>%</div>
+            </div>
+          </div>
+          <div id="subLowerProgressZone">
+            <div>Correspond à :</div>
+            <div id="tempsEnMemoire">00:00:00</div>
+          </div>
+        </div>
+        <div id="cercleDiv">
+          <div id="cercle">
+            <div class="innerCirlce" id="hourInCircle">00</div>
+            <div class="innerCirlce">/</div>
+            <div class="innerCirlce">35h</div>
+          </div>
+        </div>
+      </div>
+      <div id="zoneBtnReset">
+        <div id="btnReset">Reset</div>
+      </div>
+    </div>
+  </body>
+</html>
