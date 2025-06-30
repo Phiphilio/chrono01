@@ -1,0 +1,204 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+    background: linear-gradient(180deg, #000000, #000000, #000000, #000000, #000000, #000000, #0e1513, #163028, #185240, #137a5b, #08a878);
+    width: 350px;
+    height: 570px;
+    margin: 0;
+    overflow: auto;
+}
+
+h2 {
+    color: #F2F2F2
+}
+
+#icon {
+    width: 50px;
+    height: 50px;
+}
+
+#chrono01 {
+    width: 100px;
+    height: 80px;
+}
+
+#container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 55px;
+    margin-top: 30px;
+
+    font-family: "Kotta One", serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+#tempsEnCours {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: "center";
+}
+
+#affichageDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #574b43;
+    border-radius: 10px;
+    width: 284px;
+    height: 59px;
+}
+
+#affichage {
+    display: flex;
+    align-items: center;
+    justify-content: "center";
+    font-size: 48px;
+    margin: 20px 0;
+    color: #F2F2F2
+}
+
+#demarrer {
+    background-color: #9a7644;
+    color: antiquewhite;
+    height: 100px;
+    width: 100px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#demarrer:hover {
+    background-color: rgb(74, 74, 65);
+    color: rgb(165, 158, 148);
+    transition: background-color 0.5s ease 0.25s;
+    border-radius: 40px;
+    transition: border-radius 0.5s ease 0.25s;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+h2 {
+    color: #F2F2F2
+}
+
+#upperTempsTermine {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#tempsTermine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px
+}
+
+#progressZone {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#upperProgressZone {}
+
+#progressBar {
+    width: 238px;
+    height: 16px;
+    border-width: 1px;
+    border-color: #FFFFFF;
+    border-style: solid;
+}
+
+#innerProgressBar {
+    height: 16px;
+    width: 0px;
+    background-color: #805D45;
+    transition: width 0.5s ease 0.25s;
+}
+
+#lowerProgressZone {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    color: #FFFFFF;
+}
+
+#star {
+    height: 30px;
+    width: 30px;
+}
+
+#subLowerProgressZone {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    color: #FFFFFF;
+    gap: 3px
+}
+
+#tempsEnMemoire {
+    color: rgb(194, 151, 121);
+}
+
+#cercleDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border-width: 1px;
+    border-color: #FFFFFF;
+    border-style: solid;
+    border-width: 2px;
+    background-color: #805D45;
+}
+
+#cercle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    border-color: #FFFFFF;
+    color: #F2F2F2
+}
+
+
+#zoneBtnReset {
+    display: flex;
+    align-items: flex-end;
+    justify-content: end
+}
+
+#btnReset {
+    position: absolute;
+    right: 10px;
+    width: 95px;
+    height: 25px;
+    border-radius: 10px;
+    background-color: #F2F2F2;
+    color: rgb(197, 30, 30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+#btnReset:hover {
+    background-color: rgb(197, 30, 30);
+    color: #F2F2F2;
+    transition: background-color 0.5s ease 0.25s;
+    transition: color 0.2s ease 0.25s;
+
+}
