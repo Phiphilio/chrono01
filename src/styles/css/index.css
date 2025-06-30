@@ -100,7 +100,8 @@ h2 {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 25px
+    gap: 25px;
+    margin-top: 25%;
 }
 
 #progressZone {
@@ -123,7 +124,7 @@ h2 {
 #innerProgressBar {
     height: 16px;
     width: 0px;
-    background-color: #805D45;
+    background-color: #08a878;
     transition: width 0.5s ease 0.25s;
 }
 
@@ -148,7 +149,7 @@ h2 {
 }
 
 #tempsEnMemoire {
-    color: rgb(194, 151, 121);
+    color: #08a878;
 }
 
 #cercleDiv {
@@ -162,7 +163,7 @@ h2 {
     border-color: #FFFFFF;
     border-style: solid;
     border-width: 2px;
-    background-color: #805D45;
+    background-color: #08a878;
 }
 
 #cercle {
