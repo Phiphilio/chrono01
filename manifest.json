@@ -7,7 +7,7 @@
   "content_scripts": [
     {
       "matches": ["https://hub.zone01normandie.org/emargement/user.php"],
-      "js": ["dist/content/content.js"],
+      "js": ["dist/script/script.js"],
       "run_at": "document_end"
     }
   ],
