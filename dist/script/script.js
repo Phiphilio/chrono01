@@ -27,13 +27,6 @@ window.addEventListener("load", () => {
           for (let j = 0; j < colonnes.length; j++) {
             const cellule = colonnes[j];
             console.log("la boucle se lance bien");
-            /* console.log(`cellule [${i},${j}]`, cellule);
-                        console.log(`Cellule [${i},${j}]:`, cellule.textContent);
-                        console.log(
-                          " la date du premier élément",
-                          cellule?.firstElementChild?.textContent
-                        );
-                        console.log(" la date du jour", jour);*/
             if (i === 1 && j === 0) {
               console.log("la date correspond");
               const logTime = cellule?.children[1]?.textContent;
