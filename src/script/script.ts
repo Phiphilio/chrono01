@@ -31,16 +31,16 @@ window.addEventListener("load", () => {
           const colonnes = ligne.children;
           for (let j = 0; j < colonnes.length; j++) {
             const cellule = colonnes[j];
-            console.log(`cellule [${i},${j}]`, cellule);
+            /* console.log(`cellule [${i},${j}]`, cellule);
             console.log(`Cellule [${i},${j}]:`, cellule.textContent);
             console.log(
               " la date du premier élément",
               cellule?.firstElementChild?.textContent
             );
-            console.log(" la date du jour", jour);
+            console.log(" la date du jour", jour);*/
             if (i === 1 && j === 0) {
               console.log("la date correspond");
-              cellule?.children[1]?.textContent;
+              const logTime = cellule?.children[1]?.textContent;
               console.log(
                 "deuxième enfant :",
                 cellule?.children[1]?.textContent
