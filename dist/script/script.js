@@ -38,6 +38,10 @@ window.addEventListener("load", () => {
                 convertirHeureEnSecondes(finalClock) -
                 convertirHeureEnSecondes(logTime);
               const result = convertirSecondesEnHeure(transition);
+              chrome.runtime.sendMessage({
+                type: "resultat-transition",
+                data: result,
+              });
               console.log(" tu bosses depuis : ", result);
             }
           }
