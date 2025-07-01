@@ -10,8 +10,8 @@ if (clock) {
 const maintenant = new Date();
 
 const date = maintenant.getDate();
-const mois = maintenant.getMonth() + 1;
-const annee = maintenant.getFullYear();
+const mois = String(maintenant.getMonth() + 1).padStart(2, "0");
+const annee = String(maintenant.getFullYear()).padStart(2, "0");
 
 console.log(`on est le : ${annee}-${mois}-${date}`);
 // Attendre que la page soit *vraiment* chargée
