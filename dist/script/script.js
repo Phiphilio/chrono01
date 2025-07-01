@@ -30,7 +30,7 @@ window.addEventListener("load", () => {
                         console.log(`Cellule [${i},${j}]:`, cellule.textContent);
                         console.log(" la date du premier élément", cellule?.firstElementChild?.textContent);
                         console.log(" la date du jour", jour);
-                        if (cellule?.firstElementChild?.textContent?.trim() === jour?.trim()) {
+                        if (i === 1 && j === 0) {
                             console.log("la date correspond");
                             cellule?.children[1]?.textContent;
                             console.log("deuxième enfant :", cellule?.children[1]?.textContent);

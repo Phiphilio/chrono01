@@ -38,9 +38,7 @@ window.addEventListener("load", () => {
               cellule?.firstElementChild?.textContent
             );
             console.log(" la date du jour", jour);
-            if (
-              cellule?.firstElementChild?.textContent?.trim() === jour?.trim()
-            ) {
+            if (i === 1 && j === 0) {
               console.log("la date correspond");
               cellule?.children[1]?.textContent;
               console.log(
