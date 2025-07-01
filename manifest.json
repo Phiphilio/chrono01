@@ -3,8 +3,6 @@
   "name": "Chrono01",
   "version": "1.0",
   "description": "Une extension Chrome qui fait la somme des heures.",
-  "permissions": ["scripting", "tabs"],
-  "host_permissions": ["https://hub.zone01normandie.org/*"],
   "content_scripts": [
     {
       "matches": ["https://hub.zone01normandie.org/emargement/user.php"],
@@ -12,10 +10,6 @@
       "run_at": "document_end"
     }
   ],
-  "background": {
-    "service_worker": "dist/background/background.js",
-    "type": "module"
-  },
   "action": {
     "default_popup": "src/html/popup.html",
     "default_icon": {

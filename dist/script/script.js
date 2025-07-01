@@ -1,57 +1,51 @@
 console.log("test");
-const clock = document.getElementById("clock");
-let finalClock;
-if (clock != undefined) {
-  finalClock = clock.textContent;
-}
-// récupération de la date
-const maintenant = new Date();
-const date = String(maintenant.getDate()).padStart(2, "0");
-const mois = String(maintenant.getMonth() + 1).padStart(2, "0");
-const annee = String(maintenant.getFullYear()).padStart(2, "0");
-const jour = ` ${annee}-${mois}-${date}`;
-console.log(`on est le : ${annee}-${mois}-${date}`);
-// Attendre que la page soit *vraiment* chargée
-window.addEventListener("load", () => {
-  // Délai pour laisser le site remplir dynamiquement le DOM
-  setTimeout(() => {
-    const interval = setInterval(() => {
-      const logTable = document.getElementById("logTable");
-      if (logTable && logTable.children.length > 0) {
-        clearInterval(interval);
-        console.log("logTable trouvé après délai");
-        const lignes = logTable.children;
-        for (let i = 0; i < lignes.length; i++) {
-          const ligne = lignes[i];
-          const colonnes = ligne.children;
-          for (let j = 0; j < colonnes.length; j++) {
-            const cellule = colonnes[j];
-            console.log("la boucle se lance bien");
-            if (i === 1 && j === 0) {
-              console.log("la date correspond");
-              const logTime = cellule?.children[1]?.textContent;
-              console.log(
-                "deuxième enfant :",
-                cellule?.children[1]?.textContent
-              );
-              const transition =
-                convertirHeureEnSecondes(finalClock) -
-                convertirHeureEnSecondes(logTime);
-              const result = convertirSecondesEnHeure(transition);
-              chrome.runtime.sendMessage({
-                type: "resultat-transition",
-                data: result,
-              });
-              console.log(" tu bosses depuis : ", result);
+function calculDuree() {
+  return new Promise((resolve, reject) => {
+    let clock = document.getElementById("clock");
+    let finalClock;
+    if (clock != undefined) {
+      finalClock = clock.textContent;
+    } else {
+      reject("clock introuvable");
+      return;
+    }
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        let interval = setInterval(() => {
+          let logTable = document.getElementById("logTable");
+          if (logTable && logTable.children.length > 0) {
+            clearInterval(interval);
+            let lignes = logTable.children;
+            for (let i = 0; i < lignes.length; i++) {
+              let ligne = lignes[i];
+              let colonnes = ligne.children;
+              for (let j = 0; j < colonnes.length; j++) {
+                let cellule = colonnes[j];
+                if (i === 1 && j === 0) {
+                  let logTime = cellule?.children[1]?.textContent;
+                  if (finalClock && logTime) {
+                    let transition =
+                      convertirHeureEnSecondes(finalClock) -
+                      convertirHeureEnSecondes(logTime);
+                    let result = convertirSecondesEnHeure(transition);
+                    console.log("tu bosses depuis : ", result);
+                    resolve(result);
+                    return; // pour ne pas continuer la boucle inutilement
+                  } else {
+                    reject("Données manquantes pour calcul");
+                    return;
+                  }
+                }
+              }
             }
+          } else {
+            console.log("logTable pas encore dispo...");
           }
-        }
-      } else {
-        console.log("logTable pas encore dispo...");
-      }
-    }, 300); // essaie toutes les 300ms
-  }, 5000); // attend 5 secondes après chargement
-});
+        }, 300);
+      }, 5000);
+    });
+  });
+}
 function convertirHeureEnSecondes(heureStr) {
   if (heureStr === null) {
     throw new Error("L'heure ne peut pas être nulle");
@@ -76,3 +70,33 @@ function convertirSecondesEnHeure(totalSecondes) {
     "0"
   )}:${String(secondes).padStart(2, "0")}`;
 }
+(() => {
+  const container = document.createElement("div");
+  container.id = "fixed-widget";
+  // Styles CSS directement en JS
+  Object.assign(container.style, {
+    position: "fixed",
+    bottom: "10px",
+    right: "10px",
+    width: "350px",
+    height: "250px",
+    background:
+      "linear-gradient(180deg, #000000, #000000, #000000, #000000, #000000, #000000, #0e1513, #163028, #185240, #137a5b, #08a878)",
+    color: "#fff",
+    padding: "10px",
+    borderRadius: "8px",
+    zIndex: "99999",
+    boxSizing: "border-box",
+    fontFamily: "Arial, sans-serif",
+  });
+  calculDuree()
+    .then((result) => {
+      console.log("Résultat reçu :", result);
+      container.textContent = result;
+      document.body.appendChild(container);
+    })
+    .catch((err) => {
+      console.error("Erreur :", err);
+    });
+  document.body.appendChild(container);
+})();
