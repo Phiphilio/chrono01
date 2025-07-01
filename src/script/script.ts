@@ -42,7 +42,11 @@ window.addEventListener("load", () => {
               cellule?.firstElementChild?.textContent?.trim() === jour?.trim()
             ) {
               console.log("la date correspond");
-              cellule?.lastElementChild?.textContent;
+              cellule?.children[1]?.textContent;
+              console.log(
+                "deuxième enfant :",
+                cellule?.children[1]?.textContent
+              );
             }
           }
         }
