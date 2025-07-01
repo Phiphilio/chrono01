@@ -9,10 +9,11 @@ if (clock) {
 // récupération de la date
 const maintenant = new Date();
 
-const date = maintenant.getDate();
+const date = String(maintenant.getDate()).padStart(2, "0");
 const mois = String(maintenant.getMonth() + 1).padStart(2, "0");
 const annee = String(maintenant.getFullYear()).padStart(2, "0");
 
+const jour = ` ${annee}-${mois}-${date}`;
 console.log(`on est le : ${annee}-${mois}-${date}`);
 // Attendre que la page soit *vraiment* chargée
 window.addEventListener("load", () => {
@@ -32,6 +33,17 @@ window.addEventListener("load", () => {
             const cellule = colonnes[j];
             console.log(`cellule [${i},${j}]`, cellule);
             console.log(`Cellule [${i},${j}]:`, cellule.textContent);
+            console.log(
+              " la date du premier élément",
+              cellule?.firstElementChild?.textContent
+            );
+            console.log(" la date du jour", jour);
+            if (
+              cellule?.firstElementChild?.textContent?.trim() === jour?.trim()
+            ) {
+              console.log("la date correspond");
+              cellule?.lastElementChild?.textContent;
+            }
           }
         }
       } else {
