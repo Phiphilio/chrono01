@@ -1,9 +1,18 @@
-export function convertirHeureEnSecondes(heureStr: String): number {
+export function convertirHeureEnSecondes(heureStr: string | null): number {
+  if (heureStr === null) {
+    throw new Error("L'heure ne peut pas être nulle");
+  }
+
   const regex = /^(\d{1,2}):(\d{2}):(\d{2})$/;
   const match = heureStr.match(regex);
-  if (!match) throw new Error("Format d'heure invalide. Utilise HH:MM:SS");
 
-  const [, h, m, s] = match.map(Number);
+  if (!match) {
+    throw new Error("Format d'heure invalide. Utilise HH:MM:SS");
+  }
+
+  const h = Number(match[1]);
+  const m = Number(match[2]);
+  const s = Number(match[3]);
   return h * 3600 + m * 60 + s;
 }
 
