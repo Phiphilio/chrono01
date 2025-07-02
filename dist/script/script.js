@@ -88,15 +88,78 @@ function convertirSecondesEnHeure(totalSecondes) {
     zIndex: "99999",
     boxSizing: "border-box",
     fontFamily: "Arial, sans-serif",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    gap: "10%",
   });
+  const title = document.createElement("div");
+  title.id = "tite";
+  title.textContent = "Progression sur 35h";
+  Object.assign(title.style, {
+    fontWeight: "bold",
+  });
+  const progressBarZone = document.createElement("div");
+  progressBarZone.id = "progressBarZone";
+  Object.assign(progressBarZone.style, {
+    width: "100%",
+    height: "20px",
+    display: "flex",
+    alignItem: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: "5%",
+  });
+  const progressBar = document.createElement("div");
+  progressBar.id = "progressBar";
+  Object.assign(progressBar.style, {
+    width: "238px",
+    height: "16px",
+    borderWidth: "1px",
+    borderColor: "#FFFFFF",
+    borderStyle: "solid",
+    borderRadius: "20px",
+  });
+  const innerProgressBar = document.createElement("div");
+  innerProgressBar.id = "innerProgressBar";
+  Object.assign(innerProgressBar.style, {
+    height: "14.5px",
+    width: "30px",
+    backgroundColor: " #08a878",
+    transition: "width 0.5s ease 0.25s",
+    borderRadius: "20px",
+  });
+  const pourcentage = document.createElement("div");
+  pourcentage.id = "pourcentage";
+  pourcentage.innerText = "0%";
+  Object.assign(pourcentage.style, {
+    height: "14.5px",
+    width: "30px",
+  });
+  const heureSemaine = document.createElement("div");
+  heureSemaine.id = "semain";
+  heureSemaine.textContent = "ce pourcentage donne 00 /35:00:00";
+  Object.assign(heureSemaine.style, {});
+  const heureDuJour = document.createElement("div");
+  heureDuJour.id = "en-tete";
+  heureDuJour.textContent = "calcul...";
+  Object.assign(heureDuJour.style, {});
   calculDuree()
     .then((result) => {
       console.log("Résultat reçu :", result);
-      container.textContent = result;
-      document.body.appendChild(container);
+      heureDuJour.textContent = `Aujourd'hui, tu t'es log depuis : ${result}`;
+      container.appendChild(heureDuJour);
     })
     .catch((err) => {
       console.error("Erreur :", err);
     });
   document.body.appendChild(container);
+  container.appendChild(title);
+  progressBar.appendChild(innerProgressBar);
+  progressBarZone.appendChild(progressBar);
+  progressBarZone.appendChild(pourcentage);
+  container.appendChild(progressBarZone);
+  container.appendChild(heureSemaine);
+  container.appendChild(heureDuJour);
 })();
