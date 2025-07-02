@@ -122,6 +122,7 @@ function convertirHeureEnSecondes(heureStr: string | null): number {
     throw new Error("L'heure ne peut pas être nulle");
   }
 
+  console.log("valeur de heureStr :", heureStr);
   const regex = /^(\d{1,2}):(\d{2}):(\d{2})$/;
   const match = heureStr.match(regex);
 
@@ -228,31 +229,32 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
 
   const heureSemaine = document.createElement("div");
   heureSemaine.id = "semain";
-  heureSemaine.textContent = "ce pourcentage donne 00 /35:00:00";
+  heureSemaine.textContent = "Soit: ... /35:00:00";
   Object.assign(heureSemaine.style, {});
 
   const heureDuJour = document.createElement("div");
   heureDuJour.id = "en-tete";
   heureDuJour.textContent = "calcul...";
   Object.assign(heureDuJour.style, {});
+  let tempsAccomplie: string;
 
-  calculDureeSemaine()
-    .then((result) => {
-      console.log("Résultat reçu :", result);
-    })
-    .catch((err) => {
-      console.error("Erreur :", err);
-    });
+  Promise.all([calculDureeSemaine(), calculDureeLog()])
+    .then(([resSemaine, resToday]) => {
+      const Semaine = convertirHeureEnSecondes(resSemaine);
+      const today = convertirHeureEnSecondes(resToday);
 
-  calculDureeLog()
-    .then((result) => {
-      console.log("Résultat reçu :", result);
-      heureDuJour.textContent = `Aujourd'hui, tu t'es log depuis : ${result}`;
+      heureDuJour.textContent = `Aujourd'hui, tu t'es log depuis : ${resToday}`;
       container.appendChild(heureDuJour);
+
+      const totalSecondes = convertirSecondesEnHeure(today + Semaine);
+      tempsAccomplie = totalSecondes; // ou un format lisible
+      heureSemaine.textContent = `Soit: ${tempsAccomplie} /35:00:00`;
+      console.log("Temps accompli :", tempsAccomplie);
     })
     .catch((err) => {
       console.error("Erreur :", err);
     });
+
   document.body.appendChild(container);
   container.appendChild(title);
   progressBar.appendChild(innerProgressBar);
