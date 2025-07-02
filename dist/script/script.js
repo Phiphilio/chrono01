@@ -179,21 +179,21 @@ function convertirSecondesEnHeure(totalSecondes) {
   innerProgressBar.id = "innerProgressBar";
   Object.assign(innerProgressBar.style, {
     height: "14.5px",
-    width: "30px",
+    width: "0px",
     backgroundColor: " #08a878",
     transition: "width 0.5s ease 0.25s",
     borderRadius: "20px",
   });
   const pourcentage = document.createElement("div");
   pourcentage.id = "pourcentage";
-  pourcentage.innerText = "0%";
+  pourcentage.innerText = "...%";
   Object.assign(pourcentage.style, {
     height: "14.5px",
     width: "30px",
   });
   const heureSemaine = document.createElement("div");
   heureSemaine.id = "semain";
-  heureSemaine.textContent = "ce pourcentage donne 00 /35:00:00";
+  heureSemaine.textContent = "Soit: ... /35:00:00";
   Object.assign(heureSemaine.style, {});
   const heureDuJour = document.createElement("div");
   heureDuJour.id = "en-tete";
@@ -206,10 +206,17 @@ function convertirSecondesEnHeure(totalSecondes) {
       const today = convertirHeureEnSecondes(resToday);
       heureDuJour.textContent = `Aujourd'hui, tu t'es log depuis : ${resToday}`;
       container.appendChild(heureDuJour);
-      const totalSecondes = convertirSecondesEnHeure(today + Semaine);
-      tempsAccomplie = totalSecondes; // ou un format lisible
-      heureSemaine.textContent = `ce pourcentage donne ${tempsAccomplie} /35:00:00`;
+      const totalSecondes = today + Semaine;
+      const totalEnHeure = convertirSecondesEnHeure(totalSecondes);
+      tempsAccomplie = totalEnHeure; // ou un format lisible
+      heureSemaine.textContent = `Soit: ${tempsAccomplie} /35:00:00`;
       console.log("Temps accompli :", tempsAccomplie);
+      // modification de la barre de progression
+      const widthInnerProgressBar = (totalSecondes * 238) / 126000;
+      innerProgressBar.style.width = `${widthInnerProgressBar}px`;
+      //modification du pourcentage
+      const progressPourcentage = Math.floor((totalSecondes * 100) / 126000);
+      pourcentage.innerText = `${progressPourcentage}%`;
     })
     .catch((err) => {
       console.error("Erreur :", err);
