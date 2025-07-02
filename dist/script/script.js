@@ -1,5 +1,58 @@
 console.log("test");
-function calculDuree() {
+const now = new Date();
+const month = String(now.getMonth() + 1).padStart(2, "0");
+const date = String(now.getDate()).padStart(2, "0");
+function calculDureeSemaine() {
+  return new Promise((resolve, reject) => {
+    let clock = document.getElementById("clock");
+    let finalClock;
+    if (clock != undefined) {
+      finalClock = clock.textContent;
+    } else {
+      reject("clock introuvable");
+      return;
+    }
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        let interval = setInterval(() => {
+          let tbody = document.getElementById("tbodyWeekCalendar");
+          if (tbody && tbody.children.length > 0) {
+            clearInterval(interval);
+            let lignes = tbody.children;
+            for (let i = 0; i < lignes.length; i++) {
+              let ligne = lignes[i];
+              let colonnes = ligne.children;
+              for (let j = 0; j < colonnes.length; j++) {
+                let cellule = colonnes[j];
+                console.log(`cellule[${i},${j}]`, cellule);
+                console.log(
+                  `cellule.firstElementChild?.textContent`,
+                  cellule.firstElementChild?.textContent
+                );
+                const text = cellule?.firstElementChild?.textContent;
+                if (text) {
+                  const [jour, mois] = text.split("/");
+                  if (
+                    jour.trim() === date.trim() &&
+                    mois.trim() === month.trim()
+                  ) {
+                    console.log("les date correspondent !!!");
+                    console.log(" heure totale :", colonnes[8].textContent);
+                    let result = colonnes[8].textContent + ":00";
+                    resolve(result);
+                  }
+                }
+              }
+            }
+          } else {
+            console.log("tbody pas encore dispo...");
+          }
+        }, 300);
+      }, 5000);
+    });
+  });
+}
+function calculDureeLog() {
   return new Promise((resolve, reject) => {
     let clock = document.getElementById("clock");
     let finalClock;
@@ -145,7 +198,14 @@ function convertirSecondesEnHeure(totalSecondes) {
   heureDuJour.id = "en-tete";
   heureDuJour.textContent = "calcul...";
   Object.assign(heureDuJour.style, {});
-  calculDuree()
+  calculDureeSemaine()
+    .then((result) => {
+      console.log("Résultat reçu :", result);
+    })
+    .catch((err) => {
+      console.error("Erreur :", err);
+    });
+  calculDureeLog()
     .then((result) => {
       console.log("Résultat reçu :", result);
       heureDuJour.textContent = `Aujourd'hui, tu t'es log depuis : ${result}`;
