@@ -249,7 +249,7 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
   icon.style.width = "24px";
   icon.style.height = "24px";
 
-  container.appendChild(icon); // ou à un endroit plus spécifique
+  container.appendChild(icon); // ou à un endroit plus spécifique//
 
   let tempsAccomplie: string;
 
