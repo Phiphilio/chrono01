@@ -243,6 +243,14 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
   timeleft.textContent = "Il reste...";
   Object.assign(timeleft.style, {});
 
+  const icon = document.createElement("img");
+  icon.src = "../../src/styles/assets/chrono01.png"; // ou "images/icon.png", selon ton chemin
+  icon.alt = "icone";
+  icon.style.width = "24px";
+  icon.style.height = "24px";
+
+  container.appendChild(icon); // ou à un endroit plus spécifique
+
   let tempsAccomplie: string;
 
   Promise.all([calculDureeSemaine(), calculDureeLog()])
@@ -276,6 +284,7 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
     });
 
   document.body.appendChild(container);
+  container.appendChild(icon);
   container.appendChild(title);
   progressBar.appendChild(innerProgressBar);
   progressBarZone.appendChild(progressBar);

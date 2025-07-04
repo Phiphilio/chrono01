@@ -1,3 +1,4 @@
+"use strict";
 console.log("test");
 const now = new Date();
 const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -148,6 +149,7 @@ function convertirSecondesEnHeure(totalSecondes) {
     flexDirection: "column",
     gap: "10%",
   });
+  //
   const title = document.createElement("div");
   title.id = "tite";
   title.textContent = "Progression sur 35h";
@@ -199,12 +201,22 @@ function convertirSecondesEnHeure(totalSecondes) {
   heureDuJour.id = "en-tete";
   heureDuJour.textContent = "calcul...";
   Object.assign(heureDuJour.style, {});
+  const timeleft = document.createElement("div");
+  timeleft.id = "timeleft";
+  timeleft.textContent = "Il reste...";
+  Object.assign(timeleft.style, {});
+  const icon = document.createElement("img");
+  icon.src = "../../src/styles/assets/chrono01.png";
+  icon.alt = "icone";
+  icon.style.width = "24px";
+  icon.style.height = "24px";
+  container.appendChild(icon); // ou à un endroit plus spécifique
   let tempsAccomplie;
   Promise.all([calculDureeSemaine(), calculDureeLog()])
     .then(([resSemaine, resToday]) => {
       const Semaine = convertirHeureEnSecondes(resSemaine);
       const today = convertirHeureEnSecondes(resToday);
-      heureDuJour.textContent = `Aujourd'hui, tu t'es log depuis : ${resToday}`;
+      heureDuJour.textContent = `Today log : ${resToday}`;
       container.appendChild(heureDuJour);
       const totalSecondes = today + Semaine;
       const totalEnHeure = convertirSecondesEnHeure(totalSecondes);
@@ -217,16 +229,21 @@ function convertirSecondesEnHeure(totalSecondes) {
       //modification du pourcentage
       const progressPourcentage = Math.floor((totalSecondes * 100) / 126000);
       pourcentage.innerText = `${progressPourcentage}%`;
+      // temps restant
+      const tempsRestant = convertirSecondesEnHeure(126000 - totalSecondes);
+      timeleft.innerText = `Time left :${tempsRestant}`;
     })
     .catch((err) => {
       console.error("Erreur :", err);
     });
   document.body.appendChild(container);
+  container.appendChild(icon);
   container.appendChild(title);
   progressBar.appendChild(innerProgressBar);
   progressBarZone.appendChild(progressBar);
   progressBarZone.appendChild(pourcentage);
   container.appendChild(progressBarZone);
   container.appendChild(heureSemaine);
+  container.appendChild(timeleft);
   container.appendChild(heureDuJour);
 })();
