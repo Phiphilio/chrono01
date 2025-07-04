@@ -174,6 +174,7 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
     gap: "10%",
   });
 
+  //
   const title = document.createElement("div");
   title.id = "tite";
   title.textContent = "Progression sur 35h";
@@ -236,6 +237,12 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
   heureDuJour.id = "en-tete";
   heureDuJour.textContent = "calcul...";
   Object.assign(heureDuJour.style, {});
+
+  const timeleft = document.createElement("div");
+  timeleft.id = "timeleft";
+  timeleft.textContent = "Il reste...";
+  Object.assign(timeleft.style, {});
+
   let tempsAccomplie: string;
 
   Promise.all([calculDureeSemaine(), calculDureeLog()])
@@ -243,7 +250,7 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
       const Semaine = convertirHeureEnSecondes(resSemaine);
       const today = convertirHeureEnSecondes(resToday);
 
-      heureDuJour.textContent = `Aujourd'hui, tu t'es log depuis : ${resToday}`;
+      heureDuJour.textContent = `Today log : ${resToday}`;
       container.appendChild(heureDuJour);
 
       const totalSecondes = today + Semaine;
@@ -259,6 +266,10 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
       //modification du pourcentage
       const progressPourcentage = Math.floor((totalSecondes * 100) / 126000);
       pourcentage.innerText = `${progressPourcentage}%`;
+
+      // temps restant
+      const tempsRestant = convertirSecondesEnHeure(126000 - totalSecondes);
+      timeleft.innerText = `Time left :${tempsRestant}`;
     })
     .catch((err) => {
       console.error("Erreur :", err);
@@ -270,6 +281,8 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
   progressBarZone.appendChild(progressBar);
   progressBarZone.appendChild(pourcentage);
   container.appendChild(progressBarZone);
+
   container.appendChild(heureSemaine);
+  container.appendChild(timeleft);
   container.appendChild(heureDuJour);
 })();
