@@ -88,104 +88,143 @@ function convertirSecondesEnHeure(totalSecondes) {
     // On formate avec padStart pour avoir 2 chiffres
     return `${String(heures).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(secondes).padStart(2, "0")}`;
 }
+const container = document.createElement("div");
+container.id = "fixed-widget";
+// Styles CSS directement en JS
+Object.assign(container.style, {
+    position: "fixed",
+    bottom: "10px",
+    right: "10px",
+    width: "350px",
+    height: "250px",
+    background: "linear-gradient(180deg, #ffffff, #e3f3eb, #c6e7d7, #a9dbc3, #8cceb0, #6cc29d, #49b58a, #08a878)",
+    color: "#1a3b34",
+    padding: "10px",
+    borderRadius: "8px",
+    zIndex: "99999",
+    boxSizing: "border-box",
+    fontFamily: "Arial, sans-serif",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    gap: "10%",
+});
+const title = document.createElement("div");
+title.id = "tite";
+title.textContent = "Progression sur 35h";
+Object.assign(title.style, {
+    fontWeight: "bold",
+});
+const progressBarZone = document.createElement("div");
+progressBarZone.id = "progressBarZone";
+Object.assign(progressBarZone.style, {
+    width: "100%",
+    height: "20px",
+    display: "flex",
+    alignItem: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: "5%",
+});
+const progressBar = document.createElement("div");
+progressBar.id = "progressBar";
+Object.assign(progressBar.style, {
+    width: "238px",
+    height: "16px",
+    borderWidth: "2px",
+    borderColor: "#FFFFFF",
+    borderStyle: "solid",
+    borderRadius: "20px",
+    overflow: "hidden",
+});
+const innerProgressBar = document.createElement("div");
+innerProgressBar.id = "innerProgressBar";
+Object.assign(innerProgressBar.style, {
+    height: "14.5px",
+    width: "0px",
+    backgroundColor: " #08a878",
+    transition: "width 0.5s ease 0.25s",
+    borderRadius: "20px",
+});
+const pourcentage = document.createElement("div");
+pourcentage.id = "pourcentage";
+pourcentage.innerText = "...%";
+Object.assign(pourcentage.style, {
+    height: "14.5px",
+    width: "30px",
+});
+const zoneHeureSemaine = document.createElement("div");
+zoneHeureSemaine.id = "zoneHeureSemaine";
+Object.assign(zoneHeureSemaine.style, {
+    display: "flex",
+    flexDirection: "row",
+    gap: "5px",
+});
+const titreHeureSemaine = document.createElement("div");
+titreHeureSemaine.id = "titreSemain";
+titreHeureSemaine.textContent = "Soit : ";
+Object.assign(titreHeureSemaine.style, {});
+const heureSemaine = document.createElement("div");
+heureSemaine.id = "semain";
+heureSemaine.textContent = " ... ";
+Object.assign(heureSemaine.style, {
+    fontWeight: "bold",
+    color: "#08a878",
+});
+const notationHeureSemaine = document.createElement("div");
+notationHeureSemaine.id = "semain";
+notationHeureSemaine.textContent = " / 35:00:00";
+Object.assign(notationHeureSemaine.style, {});
+const zoneHeureDuJour = document.createElement("div");
+zoneHeureDuJour.id = "zoneHeureDuJour";
+Object.assign(zoneHeureDuJour.style, {
+    display: "flex",
+    flexDirection: "row",
+    gap: "5px",
+});
+const titreHeureDuJour = document.createElement("div");
+titreHeureDuJour.id = "en-tete";
+titreHeureDuJour.textContent = "Today log :";
+Object.assign(titreHeureDuJour.style, {});
+const heureDuJour = document.createElement("div");
+heureDuJour.id = "en-tete";
+heureDuJour.textContent = "calcul...";
+Object.assign(heureDuJour.style, {
+    fontWeight: "bold",
+    color: "rgb(20 21 21)",
+});
+const timeleft = document.createElement("div");
+timeleft.id = "timeleft";
+timeleft.textContent = "Il reste...";
+Object.assign(timeleft.style, {});
+document.body.appendChild(container);
+//container.appendChild(icon);
+container.appendChild(title);
+progressBar.appendChild(innerProgressBar);
+progressBarZone.appendChild(progressBar);
+progressBarZone.appendChild(pourcentage);
+container.appendChild(progressBarZone);
+zoneHeureSemaine.appendChild(titreHeureSemaine);
+zoneHeureSemaine.appendChild(heureSemaine);
+zoneHeureSemaine.appendChild(notationHeureSemaine);
+container.appendChild(zoneHeureSemaine);
+container.appendChild(timeleft);
+zoneHeureDuJour.appendChild(titreHeureDuJour);
+zoneHeureDuJour.appendChild(heureDuJour);
+container.appendChild(zoneHeureDuJour);
 function mettreAJourProgression() {
-    const container = document.createElement("div");
-    container.id = "fixed-widget";
-    // Styles CSS directement en JS
-    Object.assign(container.style, {
-        position: "fixed",
-        bottom: "10px",
-        right: "10px",
-        width: "350px",
-        height: "250px",
-        background: "linear-gradient(180deg, #000000, #000000, #000000, #000000, #000000, #000000, #0e1513, #163028, #185240, #137a5b, #08a878)",
-        color: "#fff",
-        padding: "10px",
-        borderRadius: "8px",
-        zIndex: "99999",
-        boxSizing: "border-box",
-        fontFamily: "Arial, sans-serif",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-        gap: "10%",
-    });
-    //
-    const title = document.createElement("div");
-    title.id = "tite";
-    title.textContent = "Progression sur 35h";
-    Object.assign(title.style, {
-        fontWeight: "bold",
-    });
-    const progressBarZone = document.createElement("div");
-    progressBarZone.id = "progressBarZone";
-    Object.assign(progressBarZone.style, {
-        width: "100%",
-        height: "20px",
-        display: "flex",
-        alignItem: "center",
-        justifyContent: "center",
-        flexDirection: "row",
-        gap: "5%",
-    });
-    const progressBar = document.createElement("div");
-    progressBar.id = "progressBar";
-    Object.assign(progressBar.style, {
-        width: "238px",
-        height: "16px",
-        borderWidth: "1px",
-        borderColor: "#FFFFFF",
-        borderStyle: "solid",
-        borderRadius: "20px",
-    });
-    const innerProgressBar = document.createElement("div");
-    innerProgressBar.id = "innerProgressBar";
-    Object.assign(innerProgressBar.style, {
-        height: "14.5px",
-        width: "0px",
-        backgroundColor: " #08a878",
-        transition: "width 0.5s ease 0.25s",
-        borderRadius: "20px",
-    });
-    const pourcentage = document.createElement("div");
-    pourcentage.id = "pourcentage";
-    pourcentage.innerText = "...%";
-    Object.assign(pourcentage.style, {
-        height: "14.5px",
-        width: "30px",
-    });
-    const heureSemaine = document.createElement("div");
-    heureSemaine.id = "semain";
-    heureSemaine.textContent = "Soit: ... /35:00:00";
-    Object.assign(heureSemaine.style, {});
-    const heureDuJour = document.createElement("div");
-    heureDuJour.id = "en-tete";
-    heureDuJour.textContent = "calcul...";
-    Object.assign(heureDuJour.style, {});
-    const timeleft = document.createElement("div");
-    timeleft.id = "timeleft";
-    timeleft.textContent = "Il reste...";
-    Object.assign(timeleft.style, {});
-    /*
-    const icon = document.createElement("img");
-    icon.src = "chrono01.png"; // ou "images/icon.png", selon ton chemin
-    icon.alt = "icone";
-    icon.style.width = "24px";
-    icon.style.height = "24px";
-  
-    container.appendChild(icon); // ou à un endroit plus spécifique//*/
     let tempsAccomplie;
     Promise.all([calculDureeSemaine(), calculDureeLog()])
         .then(([resSemaine, resToday]) => {
         const Semaine = convertirHeureEnSecondes(resSemaine);
         const today = convertirHeureEnSecondes(resToday);
-        heureDuJour.textContent = `Today log : ${resToday}`;
-        container.appendChild(heureDuJour);
+        heureDuJour.textContent = ` ${resToday}`;
+        zoneHeureDuJour.appendChild(heureDuJour);
         const totalSecondes = today + Semaine;
         const totalEnHeure = convertirSecondesEnHeure(totalSecondes);
         tempsAccomplie = totalEnHeure; // ou un format lisible
-        heureSemaine.textContent = `Soit: ${tempsAccomplie} /35:00:00`;
+        heureSemaine.textContent = ` ${tempsAccomplie} `;
         console.log("Temps accompli :", tempsAccomplie);
         // modification de la barre de progression
         const widthInnerProgressBar = (totalSecondes * 238) / 126000;
@@ -194,25 +233,21 @@ function mettreAJourProgression() {
         const progressPourcentage = Math.floor((totalSecondes * 100) / 126000);
         pourcentage.innerText = `${progressPourcentage}%`;
         // temps restant
-        const tempsRestant = convertirSecondesEnHeure(126000 - totalSecondes);
-        timeleft.innerText = `Time left :${tempsRestant}`;
+        if (126000 - totalSecondes <= 0) {
+            const tempsRestant = convertirSecondesEnHeure(0);
+            timeleft.innerText = `Time left :${tempsRestant}`;
+        }
+        else {
+            const tempsRestant = convertirSecondesEnHeure(126000 - totalSecondes);
+            timeleft.innerText = `Time left :${tempsRestant}`;
+        }
     })
         .catch((err) => {
         console.error("Erreur :", err);
     });
-    document.body.appendChild(container);
-    //container.appendChild(icon);
-    container.appendChild(title);
-    progressBar.appendChild(innerProgressBar);
-    progressBarZone.appendChild(progressBar);
-    progressBarZone.appendChild(pourcentage);
-    container.appendChild(progressBarZone);
-    container.appendChild(heureSemaine);
-    container.appendChild(timeleft);
-    container.appendChild(heureDuJour);
 }
 // Appel initial
 setTimeout(() => {
     mettreAJourProgression();
     setInterval(mettreAJourProgression, 60000); // toutes les 60 secondes
-}, 5000); // petit délai pour être sûr que le DOM est prêt
+}, 2000); // petit délai pour être sûr que le DOM est prêt
