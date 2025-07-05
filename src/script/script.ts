@@ -7,113 +7,68 @@ const date = String(now.getDate()).padStart(2, "0");
 
 function calculDureeSemaine(): Promise<string> {
   return new Promise((resolve, reject) => {
-    let clock = document.getElementById("clock");
-    let finalClock: string | null;
+    let interval = setInterval(() => {
+      const tbody = document.getElementById("tbodyWeekCalendar");
+      if (tbody && tbody.children.length > 0) {
+        clearInterval(interval);
 
-    if (clock != undefined) {
-      finalClock = clock.textContent;
-    } else {
-      reject("clock introuvable");
-      return;
-    }
-
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        let interval = setInterval(() => {
-          let tbody = document.getElementById("tbodyWeekCalendar");
-          if (tbody && tbody.children.length > 0) {
-            clearInterval(interval);
-
-            let lignes = tbody.children;
-            for (let i = 0; i < lignes.length; i++) {
-              let ligne = lignes[i];
-              let colonnes = ligne.children;
-              for (let j = 0; j < colonnes.length; j++) {
-                let cellule = colonnes[j];
-                console.log(`cellule[${i},${j}]`, cellule);
-                console.log(
-                  `cellule.firstElementChild?.textContent`,
-                  cellule.firstElementChild?.textContent
-                );
-
-                const text = cellule?.firstElementChild?.textContent;
-                if (text) {
-                  const [jour, mois] = text.split("/");
-
-                  if (
-                    jour.trim() === date.trim() &&
-                    mois.trim() === month.trim()
-                  ) {
-                    console.log("les date correspondent !!!");
-                    console.log(" heure totale :", colonnes[8].textContent);
-
-                    let result = colonnes[8].textContent + ":00";
-
-                    resolve(result);
-                  }
-                }
+        const lignes = tbody.children;
+        for (let i = 0; i < lignes.length; i++) {
+          const ligne = lignes[i];
+          const colonnes = ligne.children;
+          for (let j = 0; j < colonnes.length; j++) {
+            const cellule = colonnes[j];
+            const text = cellule?.firstElementChild?.textContent;
+            if (text) {
+              const [jour, mois] = text.split("/");
+              if (jour.trim() === date.trim() && mois.trim() === month.trim()) {
+                const result = colonnes[8].textContent + ":00";
+                resolve(result);
+                return;
               }
             }
-          } else {
-            console.log("tbody pas encore dispo...");
           }
-        }, 300);
-      }, 5000);
-    });
+        }
+        reject("Aucune cellule avec date trouvée");
+      }
+    }, 300);
   });
 }
 
 function calculDureeLog(): Promise<string> {
   return new Promise((resolve, reject) => {
-    let clock = document.getElementById("clock");
-    let finalClock: string | null;
+    let interval = setInterval(() => {
+      const logTable = document.getElementById("logTable");
+      const clock = document.getElementById("clock");
+      if (logTable && logTable.children.length > 0 && clock) {
+        clearInterval(interval);
+        const finalClock = clock.textContent;
 
-    if (clock != undefined) {
-      finalClock = clock.textContent;
-    } else {
-      reject("clock introuvable");
-      return;
-    }
-
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        let interval = setInterval(() => {
-          let logTable = document.getElementById("logTable");
-          if (logTable && logTable.children.length > 0) {
-            clearInterval(interval);
-
-            let lignes = logTable.children;
-            for (let i = 0; i < lignes.length; i++) {
-              let ligne = lignes[i];
-              let colonnes = ligne.children;
-              for (let j = 0; j < colonnes.length; j++) {
-                let cellule = colonnes[j];
-
-                if (i === 1 && j === 0) {
-                  let logTime = cellule?.children[1]?.textContent;
-
-                  if (finalClock && logTime) {
-                    let transition =
-                      convertirHeureEnSecondes(finalClock) -
-                      convertirHeureEnSecondes(logTime);
-                    let result = convertirSecondesEnHeure(transition);
-
-                    console.log("tu bosses depuis : ", result);
-                    resolve(result);
-                    return; // pour ne pas continuer la boucle inutilement
-                  } else {
-                    reject("Données manquantes pour calcul");
-                    return;
-                  }
-                }
+        const lignes = logTable.children;
+        for (let i = 0; i < lignes.length; i++) {
+          const ligne = lignes[i];
+          const colonnes = ligne.children;
+          for (let j = 0; j < colonnes.length; j++) {
+            const cellule = colonnes[j];
+            if (i === 1 && j === 0) {
+              const logTime = cellule?.children[1]?.textContent;
+              if (finalClock && logTime) {
+                const transition =
+                  convertirHeureEnSecondes(finalClock) -
+                  convertirHeureEnSecondes(logTime);
+                const result = convertirSecondesEnHeure(transition);
+                resolve(result);
+                return;
+              } else {
+                reject("Horloges manquantes");
+                return;
               }
             }
-          } else {
-            console.log("logTable pas encore dispo...");
           }
-        }, 300);
-      }, 5000);
-    });
+        }
+        reject("Pas de cellule log trouvée");
+      }
+    }, 300);
   });
 }
 
@@ -148,7 +103,7 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
   )}:${String(secondes).padStart(2, "0")}`;
 }
 
-(() => {
+function mettreAJourProgression() {
   const container = document.createElement("div");
   container.id = "fixed-widget";
 
@@ -243,13 +198,14 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
   timeleft.textContent = "Il reste...";
   Object.assign(timeleft.style, {});
 
+  /*
   const icon = document.createElement("img");
-  icon.src = "../../src/styles/assets/chrono01.png"; // ou "images/icon.png", selon ton chemin
+  icon.src = "chrono01.png"; // ou "images/icon.png", selon ton chemin
   icon.alt = "icone";
   icon.style.width = "24px";
   icon.style.height = "24px";
 
-  container.appendChild(icon); // ou à un endroit plus spécifique//
+  container.appendChild(icon); // ou à un endroit plus spécifique//*/
 
   let tempsAccomplie: string;
 
@@ -284,7 +240,7 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
     });
 
   document.body.appendChild(container);
-  container.appendChild(icon);
+  //container.appendChild(icon);
   container.appendChild(title);
   progressBar.appendChild(innerProgressBar);
   progressBarZone.appendChild(progressBar);
@@ -294,4 +250,10 @@ function convertirSecondesEnHeure(totalSecondes: number): string {
   container.appendChild(heureSemaine);
   container.appendChild(timeleft);
   container.appendChild(heureDuJour);
-})();
+}
+
+// Appel initial
+setTimeout(() => {
+  mettreAJourProgression();
+  setInterval(mettreAJourProgression, 60000); // toutes les 60 secondes
+}, 5000); // petit délai pour être sûr que le DOM est prêt
