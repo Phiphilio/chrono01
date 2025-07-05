@@ -155,7 +155,7 @@ Object.assign(progressBar.style, {
   width: "238px",
   height: "16px",
   borderWidth: "2px",
-  borderColor: "#FFFFFF",
+  borderColor: "rgb(23 20 20)",
   borderStyle: "solid",
   borderRadius: "20px",
   overflow: "hidden",
