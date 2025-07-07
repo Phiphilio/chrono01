@@ -249,5 +249,5 @@ function mettreAJourProgression() {
 // Appel initial
 setTimeout(() => {
     mettreAJourProgression();
-    setInterval(mettreAJourProgression, 60000); // toutes les 60 secondes
-}, 2000); // petit délai pour être sûr que le DOM est prêt
+    setInterval(mettreAJourProgression, 1000); // toutes les 60 secondes
+}, 1000); // petit délai pour être sûr que le DOM est prêt
